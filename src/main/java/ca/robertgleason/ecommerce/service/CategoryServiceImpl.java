@@ -28,6 +28,18 @@ public class CategoryServiceImpl implements CategoryService {
         categories.add(category);
     }
 
+
+    @Override
+    public void updateCategory(Category category) {
+        Category existingCategory = categories.stream()
+                .filter(c -> c.getCategoryId().equals(category.getCategoryId()))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Category with id " + category.getCategoryId() + " not found"));
+
+        existingCategory.setCategoryName(category.getCategoryName());
+    }
+
     @Override
     public String deleteCategory(Long categoryId) {
         Category category = categories.stream()
