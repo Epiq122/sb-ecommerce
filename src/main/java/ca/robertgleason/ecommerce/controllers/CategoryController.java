@@ -1,4 +1,4 @@
-package ca.robertgleason.ecommerce.controller;
+package ca.robertgleason.ecommerce.controllers;
 
 
 import ca.robertgleason.ecommerce.model.Category;
