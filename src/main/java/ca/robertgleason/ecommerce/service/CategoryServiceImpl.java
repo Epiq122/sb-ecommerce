@@ -64,15 +64,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public String deleteCategory(Long categoryId) {
+    public CategoryDTO deleteCategory(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId + ""));
         if (category != null) {
             categoryRepository.delete(category);
-            return "Category with id " + categoryId + " deleted";
         }
-
-        return "Category not found";
+        return modelMapper.map(category, CategoryDTO.class);
+        
     }
+
 
 }
