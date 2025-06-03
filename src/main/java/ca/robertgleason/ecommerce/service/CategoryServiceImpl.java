@@ -3,7 +3,10 @@ package ca.robertgleason.ecommerce.service;
 import ca.robertgleason.ecommerce.exceptions.APIException;
 import ca.robertgleason.ecommerce.exceptions.ResourceNotFoundException;
 import ca.robertgleason.ecommerce.model.Category;
+import ca.robertgleason.ecommerce.payload.CategoryDTO;
+import ca.robertgleason.ecommerce.payload.CategoryResponse;
 import ca.robertgleason.ecommerce.repository.CategoryRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,17 +19,22 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    private ModelMapper modelMapper;
+
+
+    public CategoryServiceImpl(CategoryRepository categoryRepository, ModelMapper modelMapper) {
         this.categoryRepository = categoryRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public List<Category> getAllCategories() {
+    public CategoryResponse getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         if (categories.isEmpty()) {
             throw new APIException("No categories found");
         }
-        return categories;
+        List<CategoryDTO> categoryDTOS = categories.stream().map(category -> modelMapper.map(category, CategoryDTO.class)).toList();
+        return new CategoryResponse(categoryDTOS);
     }
 
 
