@@ -1,7 +1,6 @@
 package ca.robertgleason.ecommerce.controllers;
 
 
-import ca.robertgleason.ecommerce.model.Category;
 import ca.robertgleason.ecommerce.payload.CategoryDTO;
 import ca.robertgleason.ecommerce.payload.CategoryResponse;
 import ca.robertgleason.ecommerce.service.CategoryService;
@@ -37,9 +36,9 @@ public class CategoryController {
 
 
     @PutMapping("/public/categories/{categoryId}")
-    public ResponseEntity<String> updateCategory(@Valid @PathVariable Long categoryId, @RequestBody Category category) {
-        categoryService.updateCategory(category, categoryId);
-        return new ResponseEntity<>("Category updated", HttpStatus.OK);
+    public ResponseEntity<CategoryDTO> updateCategory(@Valid @PathVariable Long categoryId, @RequestBody CategoryDTO categoryDto) {
+        CategoryDTO savedCategoryDTO = categoryService.updateCategory(categoryDto, categoryId);
+        return new ResponseEntity<>(savedCategoryDTO, HttpStatus.OK);
 
     }
 

@@ -10,7 +10,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -51,13 +50,17 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public Category updateCategory(Category category, Long categoryId) {
-        Optional<Category> savedCategoryOptional = categoryRepository.findById(categoryId);
-        Category savedCategory = savedCategoryOptional.orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId + ""));
+    public CategoryDTO updateCategory(CategoryDTO categoryDto, Long categoryId) {
+        categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId + ""));
+        Category savedCategory;
 
-        savedCategory.setCategoryName(category.getCategoryName());
-        categoryRepository.save(savedCategory);
-        return savedCategory;
+        Category category = modelMapper.map(categoryDto, Category.class);
+        category.setCategoryId(categoryId);
+        savedCategory = categoryRepository.save(category);
+        return modelMapper.map(savedCategory, CategoryDTO.class);
+
+
     }
 
     @Override
