@@ -41,19 +41,19 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public void updateCategory(Category category, Long categoryId) {
+    public Category updateCategory(Category category, Long categoryId) {
         Optional<Category> savedCategoryOptional = categoryRepository.findById(categoryId);
         Category savedCategory = savedCategoryOptional.orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId + ""));
 
         savedCategory.setCategoryName(category.getCategoryName());
         categoryRepository.save(savedCategory);
+        return savedCategory;
     }
 
     @Override
     public String deleteCategory(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId + ""));
-
         if (category != null) {
             categoryRepository.delete(category);
             return "Category with id " + categoryId + " deleted";
