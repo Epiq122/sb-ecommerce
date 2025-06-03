@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
-
 public class MyGlobalExceptionHandler {
 
 
@@ -27,6 +26,12 @@ public class MyGlobalExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 
+    }
+
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> myResourceNotFoundException(ResourceNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 }
