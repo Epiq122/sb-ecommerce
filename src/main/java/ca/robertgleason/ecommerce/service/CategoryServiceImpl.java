@@ -1,5 +1,6 @@
 package ca.robertgleason.ecommerce.service;
 
+import ca.robertgleason.ecommerce.exceptions.APIException;
 import ca.robertgleason.ecommerce.exceptions.ResourceNotFoundException;
 import ca.robertgleason.ecommerce.model.Category;
 import ca.robertgleason.ecommerce.repository.CategoryRepository;
@@ -12,10 +13,7 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    //    private final List<Category> categories = new ArrayList<>();
-
-
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
 
     public CategoryServiceImpl(CategoryRepository categoryRepository) {
@@ -30,6 +28,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void createCategory(Category category) {
+        Category savedCategory = categoryRepository.findByCategoryName(category.getCategoryName());
+        if (savedCategory != null) {
+            throw new APIException("Category with name " + category.getCategoryName() + " already exists");
+        }
         categoryRepository.save(category);
     }
 
