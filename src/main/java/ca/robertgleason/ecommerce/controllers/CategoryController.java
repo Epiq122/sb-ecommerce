@@ -2,6 +2,7 @@ package ca.robertgleason.ecommerce.controllers;
 
 
 import ca.robertgleason.ecommerce.model.Category;
+import ca.robertgleason.ecommerce.payload.CategoryDTO;
 import ca.robertgleason.ecommerce.payload.CategoryResponse;
 import ca.robertgleason.ecommerce.service.CategoryService;
 import jakarta.validation.Valid;
@@ -29,9 +30,9 @@ public class CategoryController {
 
 
     @PostMapping("/public/categories")
-    public ResponseEntity<String> createCategory(@Valid @RequestBody Category category) {
-        categoryService.createCategory(category); // add to list
-        return new ResponseEntity<>("Category created", HttpStatus.CREATED);
+    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDto) {
+        CategoryDTO savedCategory = categoryService.createCategory(categoryDto);
+        return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
     }
 
 
