@@ -1,4 +1,4 @@
-package ca.robertgleason.ecommerce.controllers;
+package ca.robertgleason.ecommerce.config;
 
 
 import org.modelmapper.ModelMapper;
