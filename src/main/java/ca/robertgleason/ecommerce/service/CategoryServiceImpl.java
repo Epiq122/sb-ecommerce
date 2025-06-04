@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse getAllCategories() {
+    public CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize) {
         List<Category> categories = categoryRepository.findAll();
         if (categories.isEmpty()) {
             throw new APIException("No categories found");
@@ -71,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
             categoryRepository.delete(category);
         }
         return modelMapper.map(category, CategoryDTO.class);
-        
+
     }
 
 
