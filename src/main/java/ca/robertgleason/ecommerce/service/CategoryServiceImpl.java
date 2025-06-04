@@ -40,7 +40,14 @@ public class CategoryServiceImpl implements CategoryService {
             throw new APIException("No categories found");
         }
         List<CategoryDTO> categoryDTOS = categories.stream().map(category -> modelMapper.map(category, CategoryDTO.class)).toList();
-        return new CategoryResponse(categoryDTOS);
+        CategoryResponse categoryResponse = new CategoryResponse();
+        categoryResponse.setPageNumber(categoriesPage.getNumber());
+        categoryResponse.setPageSize(categoriesPage.getSize());
+        categoryResponse.setTotalElements(categoriesPage.getTotalElements());
+        categoryResponse.setTotalPages(categoriesPage.getTotalPages());
+        categoryResponse.setLastPage(categoriesPage.isLast());
+        categoryResponse.setContent(categoryDTOS);
+        return categoryResponse;
     }
 
 
