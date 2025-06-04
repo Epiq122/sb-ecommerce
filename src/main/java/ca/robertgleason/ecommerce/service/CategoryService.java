@@ -1,21 +1,20 @@
 package ca.robertgleason.ecommerce.service;
 
-import ca.robertgleason.ecommerce.model.Category;
-
-import java.util.List;
+import ca.robertgleason.ecommerce.payload.CategoryDTO;
+import ca.robertgleason.ecommerce.payload.CategoryResponse;
 
 
 public interface CategoryService {
 
 
-    List<Category> getAllCategories();
+    CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder);
 
-    void createCategory(Category category);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
 
 
-    Category updateCategory(Category category, Long categoryId);
+    CategoryDTO updateCategory(CategoryDTO categoryDto, Long categoryId);
 
-    String deleteCategory(Long categoryId);
+    CategoryDTO deleteCategory(Long categoryId);
 
 
 }
